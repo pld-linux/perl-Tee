@@ -8,12 +8,13 @@ Summary:	Tee - Pure Perl emulation of GNU tee
 #Summary(pl.UTF-8):	
 Name:		perl-Tee
 Version:	0.13
-Release:	1
+Release:	2
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-authors/id/D/DA/DAGOLDEN/Tee-0.13.tar.gz
 # Source0-md5:	8641888d46b1d50125eb518664d822f0
+Patch0:		%{name}-ptee_in_bindir.patch
 URL:		http://search.cpan.org/dist/Tee/
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
@@ -36,6 +37,7 @@ copy of the input to one or more files.  By default, files will be overwritten.
 
 %prep
 %setup -q -n %{pdir}-%{version}
+%patch0 -p1
 
 %build
 %{__perl} Build.PL \
