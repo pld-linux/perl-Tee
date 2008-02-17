@@ -1,0 +1,12 @@
+--- Tee-0.13/lib/Tee.pm~	2006-08-17 18:11:42.000000000 +0100
++++ Tee-0.13/lib/Tee.pm	2008-02-17 17:28:16.818010809 +0000
+@@ -25,7 +25,8 @@
+ # to find it later without worrying about $ENV{PATH}
+ 
+ for my $path ( @INC ) {
+-    my $try_ptee = File::Spec->catfile( $path, 'auto', 'Tee', PTEE );
++#   my $try_ptee = File::Spec->catfile( $path, 'auto', 'Tee', PTEE );
++    my $try_ptee = '/usr/bin/ptee';
+     next unless -r $try_ptee;
+     if ( $try_ptee =~ /\s/ ) {
+         # protect with quotes
