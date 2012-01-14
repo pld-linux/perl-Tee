@@ -7,29 +7,31 @@
 Summary:	Tee - Pure Perl emulation of GNU tee
 #Summary(pl.UTF-8):	
 Name:		perl-Tee
-Version:	0.13
-Release:	3
+Version:	0.14
+Release:	1
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/modules/by-authors/id/D/DA/DAGOLDEN/Tee-0.13.tar.gz
-# Source0-md5:	8641888d46b1d50125eb518664d822f0
+Source0:	http://www.cpan.org/modules/by-authors/id/D/DA/DAGOLDEN/Tee-%{version}.tar.gz
+# Source0-md5:	5c189150962550b0348c31f6f3e6ad62
 URL:		http://search.cpan.org/dist/Tee/
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
 %if %{with tests}
 BuildRequires:	perl(Probe::Perl)
+BuildRequires:	perl-IO-CaptureOutput
 BuildRequires:	perl-IPC-Run3 >= 0.033
 %endif
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-The Tee distribution provides the ptee program, a pure Perl emulation of
-the standard GNU tool tee.  It is designed to be a platform-independent
-replacement for operating systems without a native tee program.  As with
-tee, it passes input received on STDIN through to STDOUT while also writing a
-copy of the input to one or more files.  By default, files will be overwritten.
+The Tee distribution provides the ptee program, a pure Perl emulation
+of the standard GNU tool tee.  It is designed to be a
+platform-independent replacement for operating systems without a
+native tee program. As with tee, it passes input received on STDIN
+through to STDOUT while also writing a copy of the input to one or
+more files.  By default, files will be overwritten.
 
 # %description -l pl.UTF-8
 # TODO
@@ -38,19 +40,17 @@ copy of the input to one or more files.  By default, files will be overwritten.
 %setup -q -n %{pdir}-%{version}
 
 %build
-%{__perl} Build.PL \
+%{__perl} Makefile.PL \
 	destdir=$RPM_BUILD_ROOT \
 	installdirs=vendor
-./Build
+%{__make}
 
-%{?with_tests:./Build test}
+%{?with_tests:%{__make} test}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-./Build install
-rm $RPM_BUILD_ROOT%{perl_vendorlib}/auto/Tee/ptee
-ln -s %{_bindir}/ptee $RPM_BUILD_ROOT%{perl_vendorlib}/auto/Tee/ptee
+%{__make} install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -60,5 +60,5 @@ rm -rf $RPM_BUILD_ROOT
 %doc Changes
 %attr(755,root,root) %{_bindir}/*
 %{perl_vendorlib}/*.pm
-%{perl_vendorlib}/auto/Tee
+%{perl_vendorlib}/Tee
 %{_mandir}/man?/*
