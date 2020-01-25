@@ -2,7 +2,6 @@
 # Conditional build:
 %bcond_without	tests		# do not perform "make test"
 #
-%include	/usr/lib/rpm/macros.perl
 %define	pdir	Tee
 Summary:	Tee - Pure Perl emulation of GNU tee
 #Summary(pl.UTF-8):	
